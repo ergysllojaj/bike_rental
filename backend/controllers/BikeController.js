@@ -20,10 +20,10 @@ module.exports.getAllBikes = (req, res) => {
 module.exports.getOneBike = (req, res) => {
   Bikes.findById(req.params.id)
     .then((bike) => {
-      res.json(bike);
+      res.status(200).json(bike);
     })
     .catch((err) => {
-      res.json({ error: "Error finding the bike !" });
+      res.status(400).json({ error: "Error finding the bike !" });
     });
 };
 
@@ -45,10 +45,10 @@ module.exports.createBike = (req, res) => {
 module.exports.updateBike = (req, res) => {
   Bikes.findByIdAndUpdate(req.params.id, req.body)
     .then((bike) => {
-      res.json(bike);
+      res.status(200).json(bike);
     })
     .catch((err) => {
-      res.json({ error: "Error updating the bike !" });
+      res.status(400).json({ error: "Error updating the bike !" });
     });
 };
 
