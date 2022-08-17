@@ -13,7 +13,7 @@ export default function Home() {
       if (res.ok) {
         setBikes(json);
       } else {
-        console.log("Error");
+        console.log("Errorr");
       }
     };
   }, []);
