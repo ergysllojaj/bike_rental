@@ -1,27 +1,21 @@
 const express = require("express");
-
+const {
+  getAllBikes,
+  getOneBike,
+  createBike,
+  updateBike,
+  deleteBike,
+} = require("../controllers/BikeController");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json({ message: "All Bikes" });
-});
+router.get("/", getAllBikes);
 
-router.get("/:id", (req, res) => {
-  res.json({ message: "Bike" + req.params.id });
-});
+router.get("/:id", getOneBike);
 
-router.post("/", (req, res) => {
-  console.log(req.body);
-  res.json({ message: "Create Bike" });
-});
+router.post("/", createBike);
 
-router.put("/:id", (req, res) => {
-  console.log(req.body);
-  res.json({ message: "Update Bike" + req.params.id });
-});
+router.put("/:id", updateBike);
 
-router.delete("/:id", (req, res) => {
-  res.json({ message: "Delete Bike" + req.params.id });
-});
+router.delete("/:id", deleteBike);
 
 module.exports = router;
