@@ -20,8 +20,8 @@ export default function Home() {
 
   return (
     <div className="home">
-      <div className="workouts">
-        {setBikes.map((bike) => (
+      <div className="bikes">
+        {bikes.map((bike) => (
           <BikeDetails key={bike.id} bike={bike} />
         ))}
       </div>
