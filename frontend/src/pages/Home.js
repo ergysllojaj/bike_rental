@@ -10,7 +10,9 @@ export default function Home() {
     const fetchBikes = async () => {
       const res = await fetch("/api/bikes");
       const json = await res.json();
+
       if (res.ok) {
+        console.log(json);
         setBikes(json);
       }
     };
