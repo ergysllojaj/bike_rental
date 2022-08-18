@@ -19,10 +19,12 @@ const bikesSchema = new Schema(
     rating: {
       type: Number,
       required: true,
+      default: 0,
     },
     isAvailable: {
       type: Boolean,
       required: true,
+      default: true,
     },
   },
   { timestamps: true }
