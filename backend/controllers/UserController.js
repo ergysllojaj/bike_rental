@@ -3,7 +3,7 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 const createToken = (user) => {
-  return jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
     expiresIn: "3d",
   });
 };
@@ -12,6 +12,8 @@ module.exports.login = (req, res) => {
   User.login(email, password)
     .then((user) => {
       const token = createToken(user);
+      console.log(token);
+      console.log(jwt.verify(token, process.env.JWT_SECRET));
       res.status(200).json({
         email: user.email,
         role: user.role,
