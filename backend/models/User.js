@@ -1,6 +1,7 @@
 const mongooes = require("mongoose");
 const Schema = mongooes.Schema;
 const bcrypt = require("bcrypt");
+const validator = require("validator");
 
 const userSchema = new Schema({
   email: {
@@ -20,6 +21,12 @@ const userSchema = new Schema({
 });
 
 userSchema.statics.signup = async function (email, password) {
+  if (!validator.isEmail(email)) {
+    throw new Error("Invalid email");
+  }
+  if (!validator.isStrongPassword(password)) {
+    throw new Error("Invalid or weak password");
+  }
   const exist = await this.findOne({ email });
   if (exist) {
     throw new Error("User already exist");
