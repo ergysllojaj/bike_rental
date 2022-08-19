@@ -1,7 +1,9 @@
 import React from "react";
 import { useState } from "react";
+import { useBikesContext } from "../hooks/useBikesContext";
 
 export default function BikeForm() {
+  const { dispatch } = useBikesContext();
   const [model, setModel] = useState("");
   const [color, setColor] = useState("");
   const [location, setLocation] = useState("");
@@ -11,6 +13,7 @@ export default function BikeForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const bike = { model, color, location, rating, isAvailable };
     const res = await fetch("/api/bikes", {
       method: "POST",
@@ -24,9 +27,9 @@ export default function BikeForm() {
 
     if (!res.ok) {
       setError(json.error);
-      console.log(bike);
     }
     if (res.ok) {
+      dispatch({ type: "CREATE_BIKE", payload: json });
       setError(null);
       setModel("");
       setColor("");
@@ -39,29 +42,30 @@ export default function BikeForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Model</label>
+    <form className="create" onSubmit={handleSubmit}>
+      <h3> Add a new bike</h3>
+      <label>Model:</label>
       <input
         type="text"
         value={model}
         onChange={(e) => setModel(e.target.value)}
       />
       <br />
-      <label>Color</label>
+      <label>Color:</label>
       <input
         type="text"
         value={color}
         onChange={(e) => setColor(e.target.value)}
       />
       <br />
-      <label>Location</label>
+      <label>Location:</label>
       <input
         type="text"
         value={location}
         onChange={(e) => setLocation(e.target.value)}
       />
       <br />
-      <label>Rating</label>
+      <label>Rating:</label>
       <input
         type="number"
         value={rating}
@@ -69,11 +73,13 @@ export default function BikeForm() {
       />
       <br />
       {/* toggle checkbox is is available */}
-      <label>Availability</label>
+      <label>Availability:</label>
       <input
         type="checkbox"
         checked={isAvailable}
-        onChange={(e) => setIsAvailable(e.target.checked)}
+        onChange={(e) =>
+          e.target.checked ? setIsAvailable(true) : setIsAvailable(false)
+        }
       />
       <br /> <br />
       <button type="submit">Add bike</button>
