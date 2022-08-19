@@ -103,9 +103,9 @@ module.exports.reserveBike = (req, res) => {
     });
 };
 
-//get all users reserved bikes
-module.exports.getAllReservations = (req, res) => {
-  Reservation.find()
+//get all users who reserved bikes
+module.exports.getAllReservationsForBike = (req, res) => {
+  Reservation.find({ bike: req.params.id })
     .populate("user", { email: 1 })
     .populate("bike", { model: 1, color: 1, location: 1 })
     .then((reservations) => {
@@ -114,7 +114,6 @@ module.exports.getAllReservations = (req, res) => {
           error: "No reservations found",
         });
       }
-      console.log(reservations);
       res.status(200).json(reservations);
     })
     .catch((err) => {

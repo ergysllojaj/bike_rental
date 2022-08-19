@@ -6,16 +6,15 @@ const {
   updateBike,
   deleteBike,
   reserveBike,
-  getAllReservations,
+  getAllReservationsForBike,
 } = require("../controllers/BikeController");
 const { isAuthAs } = require("../middleware/auth");
 const router = express.Router();
 
 router.get("/", isAuthAs(["admin"]), getAllBikes);
-
-router.get("/reservations", isAuthAs(["admin"]), getAllReservations);
-
 router.post("/", isAuthAs(["admin"]), createBike);
+
+router.get("/:id/reservations", isAuthAs(["admin"]), getAllReservationsForBike);
 
 router.get("/:id", isAuthAs(["admin"]), getOneBike);
 
