@@ -30,4 +30,4 @@ const bikesSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongooes.model("Bikes", bikesSchema);
+module.exports = mongooes.model("Bike", bikesSchema);
