@@ -1,6 +1,9 @@
 /* google font */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap");
 
+* {
+  box-sizing: border-box;
+}
 body {
   background: #f1f1f1;
   margin: 0;
@@ -10,7 +13,7 @@ header {
   background: #fff;
 }
 header .container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 10px 20px;
   display: flex;
@@ -20,15 +23,87 @@ header .container {
 header a {
   color: #333;
   text-decoration: none;
+  font-size: 33px;
+  font-weight: 700;
 }
+
 .pages {
-  max-width: 1400px;
+  max-width: 1200px;
   padding: 20px;
   margin: 0 auto;
 }
 
 .home {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   grid-gap: 100px;
+}
+
+.bikedetails {
+  background: #fff;
+  padding: 15px;
+  line-height: 0.5em;
+  overflow: hidden;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.bikedetails h3 {
+  margin-bottom: 25px;
+  font-size: 22px;
+  color: #286c76;
+}
+
+.bikedetails .availability {
+  position: absolute;
+  top: 22px;
+  right: -90px;
+  padding: 15px 0;
+  width: 280px;
+  background: black;
+  transform: rotate(45deg);
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.create {
+  background: #fff;
+  padding: 15px;
+}
+
+.create label {
+  display: block;
+}
+
+.create input {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.create input[type="checkbox"] {
+  transform: scale(2);
+  width: fit-content;
+}
+
+.create label:nth-child(14) {
+  margin-right: 10px;
+  display: inline;
+  margin-left: 10px;
+}
+
+.create button {
+  background: #286c76;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create button:hover {
+  background: #1a4a4f;
 }
