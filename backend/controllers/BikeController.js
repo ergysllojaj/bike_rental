@@ -18,6 +18,27 @@ module.exports.getAllBikes = (req, res) => {
     });
 };
 
+//get all available bikes
+module.exports.getAllAvailableBikes = async function (req, res) {
+  const startDate = new Date(req.query.startDate);
+  const endDate = new Date(req.query.endDate);
+  try {
+    const reservedBikes = await Reservation.find()
+      .populate("bike", { _id: 1 })
+      .where("startDate")
+      .lte(endDate)
+      .where("endDate")
+      .gte(startDate)
+      .select("bike");
+    const bikes = await Bikes.find({ isAvailable: true }).where({
+      _id: { $nin: reservedBikes.map((bike) => bike.bike._id) },
+    });
+    res.status(200).json(bikes);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ error: "Error finding the bikes !" });
+  }
+};
 //get one bike
 module.exports.getOneBike = (req, res) => {
   Bikes.findById(req.params.id)
