@@ -9,13 +9,14 @@ const {
   updateUserById,
   deleteUserById,
 } = require("../controllers/UserController");
+const { getAllReservationsForUser } = require("../controllers/BikeController");
 const { isAuthAs } = require("../middleware/auth");
 
 router.get("/", isAuthAs(["admin"]), getAllUsers);
 router.get("/:id", isAuthAs(["admin"]), getUserById);
 router.put("/:id", isAuthAs(["admin"]), updateUserById);
 router.delete("/:id", isAuthAs(["admin"]), deleteUserById);
-
+router.get("/:id/reservations", isAuthAs(["admin"]), getAllReservationsForUser);
 //login route
 router.post("/login", login);
 

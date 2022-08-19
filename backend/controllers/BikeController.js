@@ -121,3 +121,22 @@ module.exports.getAllReservationsForBike = (req, res) => {
       res.status(404).json({ error: "Error finding the reservations !" });
     });
 };
+
+//get all users who reserved bikes
+module.exports.getAllReservationsForUser = (req, res) => {
+  Reservation.find({ user: req.params.id })
+    .populate("user", { email: 1 })
+    .populate("bike", { model: 1, color: 1, location: 1 })
+    .then((reservations) => {
+      if (!reservations) {
+        return res.status(404).json({
+          error: "No reservations found",
+        });
+      }
+      res.status(200).json(reservations);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(404).json({ error: "Error finding the reservations !" });
+    });
+};
