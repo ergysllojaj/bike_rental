@@ -1,4 +1,6 @@
-const Bikes = require("../models/Bikes");
+const Bikes = require("../models/Bike");
+const Users = require("../models/User");
+const Reservation = require("../models/Reservation");
 
 //get all bikes
 module.exports.getAllBikes = (req, res) => {
@@ -63,5 +65,40 @@ module.exports.deleteBike = (req, res) => {
     })
     .catch((err) => {
       res.status(400).json({ error: "Error deleting the bike!" });
+    });
+};
+
+//reserve a bike
+module.exports.reserveBike = (req, res) => {
+  const { startDate, endDate } = req.body;
+  const { id } = req.params;
+  const { userId } = res;
+  //check if bike is available
+  Reservation.find({ bikeId: id })
+    .where("startDate")
+    .lte(new Date(endDate))
+    .where("endDate")
+    .gte(new Date(startDate))
+    .then((reservations) => {
+      if (reservations.length > 0) {
+        return res.status(400).json({
+          error: "Bike is not available for the given dates",
+        });
+      } else {
+        //create a new reservation
+        Reservation.create({
+          startDate: new Date(startDate),
+          endDate: new Date(endDate),
+          bike: id,
+          user: userId,
+        })
+          .then((reservation) => {
+            res.status(200).json(reservation);
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(400).json({ error: "Error reserving the bike!" });
+          });
+      }
     });
 };
