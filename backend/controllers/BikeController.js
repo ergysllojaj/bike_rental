@@ -191,6 +191,22 @@ module.exports.getAllReservationsForUser = (req, res) => {
     });
 };
 
+//cancle a reservation
+module.exports.cancelReservation = async function (req, res) {
+  const reservation = await Reservation.findByIdAndDelete(
+    req.params.reservation_id
+  ).where({
+    startDate: { $gte: new Date() },
+  });
+  if (!reservation) {
+    return res.status(404).json({
+      error: "Reservation can not be cancelled",
+    });
+  }
+  res.status(200).json(reservation);
+};
+//TODO refctor into 1 function /filters?filter=model&value=modelValue
+
 module.exports.getAllModels = async function (req, res) {
   try {
     const models = await Bikes.find({}).distinct("model");
