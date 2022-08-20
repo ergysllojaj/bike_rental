@@ -16,6 +16,7 @@ module.exports.isAuthAs = (roles) => {
         });
       }
       if (roles.includes(decoded.role)) {
+        res.userId = decoded.id;
         next();
       } else {
         return res.status(401).json({

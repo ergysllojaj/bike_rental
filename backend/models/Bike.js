@@ -21,6 +21,11 @@ const bikesSchema = new Schema(
       required: true,
       default: 0,
     },
+    ratingCount: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     isAvailable: {
       type: Boolean,
       required: true,
@@ -30,4 +35,4 @@ const bikesSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongooes.model("Bikes", bikesSchema);
+module.exports = mongooes.model("Bike", bikesSchema);
