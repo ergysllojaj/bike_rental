@@ -8,6 +8,9 @@ const {
   reserveBike,
   getAllReservationsForBike,
   getAllAvailableBikes,
+  getAllModels,
+  getAllColors,
+  getAllLocations,
 } = require("../controllers/BikeController");
 const { isAuthAs } = require("../middleware/auth");
 const router = express.Router();
@@ -15,6 +18,13 @@ const router = express.Router();
 router.get("/", isAuthAs(["admin"]), getAllBikes);
 
 router.post("/", isAuthAs(["admin"]), createBike);
+
+//populate filters
+router.get("/models", isAuthAs(["user"]), getAllModels);
+
+router.get("/colors", isAuthAs(["user"]), getAllColors);
+
+router.get("/locations", isAuthAs(["user"]), getAllLocations);
 
 router.get("/available", isAuthAs(["user"]), getAllAvailableBikes);
 

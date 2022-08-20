@@ -20,8 +20,36 @@ module.exports.getAllBikes = (req, res) => {
 
 //get all available bikes
 module.exports.getAllAvailableBikes = async function (req, res) {
+  if (!req.query.startDate || !req.query.endDate) {
+    return res.status(400).json({
+      error: "Please provide startDate and endDate",
+    });
+  }
+
   const startDate = new Date(req.query.startDate);
   const endDate = new Date(req.query.endDate);
+  const model = req.query.model;
+  const location = req.query.location;
+  const color = req.query.color;
+  let filters = {};
+  filters.isAvailable = true;
+
+  if (startDate > endDate) {
+    return res.status(400).json({
+      error: "Start date cannot be after end date",
+    });
+  }
+
+  if (model) {
+    filters.model = model;
+  }
+  if (location) {
+    filters.location = location;
+  }
+  if (color) {
+    filters.color = color;
+  }
+
   try {
     const reservedBikes = await Reservation.find()
       .populate("bike", { _id: 1 })
@@ -30,7 +58,8 @@ module.exports.getAllAvailableBikes = async function (req, res) {
       .where("endDate")
       .gte(startDate)
       .select("bike");
-    const bikes = await Bikes.find({ isAvailable: true }).where({
+
+    const bikes = await Bikes.find(filters).where({
       _id: { $nin: reservedBikes.map((bike) => bike.bike._id) },
     });
     res.status(200).json(bikes);
@@ -160,4 +189,31 @@ module.exports.getAllReservationsForUser = (req, res) => {
       console.log(err);
       res.status(404).json({ error: "Error finding the reservations !" });
     });
+};
+
+module.exports.getAllModels = async function (req, res) {
+  try {
+    const models = await Bikes.find({}).distinct("model");
+    res.status(200).json(models);
+  } catch (err) {
+    res.status(400).json({ error: "Error finding the models !" });
+  }
+};
+
+module.exports.getAllColors = async function (req, res) {
+  try {
+    const colors = await Bikes.find({}).distinct("color");
+    res.status(200).json(colors);
+  } catch (err) {
+    res.status(400).json({ error: "Error finding the colors !" });
+  }
+};
+
+module.exports.getAllLocations = async function (req, res) {
+  try {
+    const locations = await Bikes.find({}).distinct("location");
+    res.status(200).json(locations);
+  } catch (err) {
+    res.status(400).json({ error: "Error finding the locations !" });
+  }
 };
