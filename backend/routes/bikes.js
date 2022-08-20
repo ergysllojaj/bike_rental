@@ -6,6 +6,7 @@ const {
   updateBike,
   deleteBike,
   reserveBike,
+  rateBike,
   getAllReservationsForBike,
   getAllAvailableBikes,
   getAllModels,
@@ -30,6 +31,8 @@ router.get("/locations", isAuthAs(["user"]), getAllLocations);
 router.get("/available", isAuthAs(["user"]), getAllAvailableBikes);
 
 router.get("/:id/reservations", isAuthAs(["admin"]), getAllReservationsForBike);
+
+router.post("/:id/rate", isAuthAs(["user"]), rateBike);
 
 router.delete(
   "/reservations/:reservation_id",

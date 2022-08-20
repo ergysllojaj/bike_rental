@@ -205,6 +205,28 @@ module.exports.cancelReservation = async function (req, res) {
   }
   res.status(200).json(reservation);
 };
+module.exports.rateBike = async function (req, res) {
+  const rate = req.body.rating;
+  if (rate < 1 || rate > 5) {
+    return res.status(400).json({
+      error: "Rating must be between 1 and 5",
+    });
+  }
+  const id = req.params.id;
+  const bike = await Bikes.findById(id);
+  if (!bike) {
+    return res.status(404).json({
+      error: "Bike not found",
+    });
+  }
+  bike.rating =
+    (bike.rating * bike.ratingCount + rate) / (bike.ratingCount + 1);
+
+  bike.ratingCount++;
+  bike.save();
+  bike.rating = Math.round(bike.rating * 100) / 100;
+  res.status(200).json(bike);
+};
 //TODO refctor into 1 function /filters?filter=model&value=modelValue
 
 module.exports.getAllModels = async function (req, res) {

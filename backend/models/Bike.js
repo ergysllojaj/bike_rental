@@ -21,6 +21,11 @@ const bikesSchema = new Schema(
       required: true,
       default: 0,
     },
+    ratingCount: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     isAvailable: {
       type: Boolean,
       required: true,
