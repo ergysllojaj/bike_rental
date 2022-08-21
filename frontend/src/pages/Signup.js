@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
 const Signup = () => {
-  const [email, set] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [companyCode, setCompanyCode] = useState("");
   const { signup, error, isLoading } = useSignup();
 
   const handleSubmit = async function (e) {
     e.preventDefault();
-    console.log(email, password);
-    await signup(email, password);
+    await signup(email, password, companyCode);
   };
 
   return (
@@ -19,7 +19,7 @@ const Signup = () => {
         <input
           type="text"
           value={email}
-          onChange={(e) => set(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <br />
         <label>Password</label>
@@ -28,6 +28,14 @@ const Signup = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <br />
+        <label>Company code</label>
+        <input
+          type="password"
+          value={companyCode}
+          onChange={(e) => setCompanyCode(e.target.value)}
+        />
+
         <br />
         <button disabled={isLoading} type="submit">
           Signup
