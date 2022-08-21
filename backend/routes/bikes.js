@@ -17,15 +17,8 @@ const {
 const { isAuthAs } = require("../middleware/auth");
 const router = express.Router();
 
-// router.get("/", isAuthAs(["admin"]), getAllBikes);
+router.get("/", isAuthAs(["admin"]), getAllBikes);
 
-<<<<<<< update-bike-task
-// router.get("/:id", isAuthAs(["admin"]), getOneBike);
-
-// router.post("/", isAuthAs(["admin"]), createBike);
-
-// router.put("/:id", isAuthAs(["admin"]), updateBike);
-=======
 router.post("/", isAuthAs(["admin"]), createBike);
 
 //populate filters
@@ -50,19 +43,8 @@ router.delete(
 router.get("/:id", isAuthAs(["admin"]), getOneBike);
 
 router.put("/:id", isAuthAs(["admin"]), updateBike);
->>>>>>> master
 
-// router.delete("/:id", isAuthAs(["admin"]), deleteBike);
-
-router.get("/", getAllBikes);
-
-router.get("/:id", getOneBike);
-
-router.post("/", createBike);
-
-router.put("/:id", updateBike);
-
-router.delete("/:id", deleteBike);
+router.delete("/:id", isAuthAs(["admin"]), deleteBike);
 
 router.post("/:id/reserve", isAuthAs(["user"]), reserveBike);
 
