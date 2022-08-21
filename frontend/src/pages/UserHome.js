@@ -13,9 +13,9 @@ export default function Home() {
       const res = await fetch("/api/bikes/available", {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${user.token}`,
-          },
-          });
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       const json = await res.json();
       if (res.ok) {
         dispatch({ type: "SET_BIKES", payload: json });
@@ -30,7 +30,6 @@ export default function Home() {
         {bikes &&
           bikes.map((bike) => <BikeDetails key={bike._id} bike={bike} />)}
       </div>
-      <BikeForm />
     </div>
   );
 }

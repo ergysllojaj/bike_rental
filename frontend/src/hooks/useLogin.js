@@ -10,7 +10,6 @@ export const useLogin = () => {
   const login = async function (email, password) {
     setIsLoading(true);
     setError(null);
-
     try {
       const response = await fetch("/api/users/login", {
         method: "POST",
@@ -35,6 +34,7 @@ export const useLogin = () => {
         setError(data.message);
       }
     } catch (err) {
+      console.log(email, password);
       setIsLoading(false);
       setError(err.message);
     }

@@ -28,7 +28,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
-       
+
         <button disabled={isLoading} type="submit">
           Login
         </button>

@@ -58,6 +58,7 @@ module.exports.deleteUserById = (req, res) => {
 
 //login user
 module.exports.login = (req, res) => {
+  console.log(req.body);
   const { email, password } = req.body;
   User.login(email, password)
     .then((user) => {

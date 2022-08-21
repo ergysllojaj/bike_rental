@@ -13,7 +13,7 @@ export default function Home() {
       const res = await fetch("/api/bikes", {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${user.token}`,
+          Authorization: `Bearer ${user.token}`,
         },
       });
       const json = await res.json();
