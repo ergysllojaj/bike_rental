@@ -62,8 +62,6 @@ module.exports.login = (req, res) => {
   User.login(email, password)
     .then((user) => {
       const token = createToken(user);
-      console.log(token);
-      console.log(jwt.verify(token, process.env.JWT_SECRET));
       res.status(200).json({
         email: user.email,
         role: user.role,
@@ -77,16 +75,16 @@ module.exports.login = (req, res) => {
     });
 };
 //signup user
-module.exports.signup = (req, res) => {
+module.exports.signup = async function (req, res) {
   const { email, password, code } = req.body;
-  User.signup(email, password, code)
-    .then((user) => {
-      const token = createToken(user);
-      res.status(200).json({ email: user.email, role: user.role, token });
-    })
-    .catch((err) => {
-      res.json({
-        message: err.message,
-      });
+  console.log(req.body);
+  try {
+    const user = await User.signup(email, password, code);
+    const token = createToken(user);
+    res.status(200).json({ email: user.email, role: user.role, token });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
     });
+  }
 };
