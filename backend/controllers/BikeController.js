@@ -21,9 +21,12 @@ module.exports.getAllBikes = (req, res) => {
 //get all available bikes
 module.exports.getAllAvailableBikes = async function (req, res) {
   if (!req.query.startDate || !req.query.endDate) {
-    return res.status(400).json({
-      error: "Please provide startDate and endDate",
-    });
+    try {
+      const bikes = await Bikes.find({ isAvailable: true });
+      return res.status(200).json(bikes);
+    } catch (err) {
+      return res.status(400).json({ error: "Error finding the bikes !" });
+    }
   }
 
   const startDate = new Date(req.query.startDate);
@@ -98,6 +101,7 @@ module.exports.createBike = (req, res) => {
 
 //update a bike
 module.exports.updateBike = (req, res) => {
+  console.log(req.body, req.params.id);
   Bikes.findByIdAndUpdate(req.params.id, req.body)
     .then((bike) => {
       res.status(200).json(bike);
