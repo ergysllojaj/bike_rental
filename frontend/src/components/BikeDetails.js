@@ -1,12 +1,21 @@
 import React from "react";
+import { useAuthContext } from "../hooks/useAuthContext";
 import { useBikesContext } from "../hooks/useBikesContext";
 
 export default function BikeDetails({ bike }) {
   const { dispatch } = useBikesContext();
+  const { user } = useAuthContext();
 
   const handleClick = async () => {
+    if (!user) {
+      return;
+    }
     const res = await fetch(`/api/bikes/${bike._id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${user.token}`,
+      },
     });
 
     const json = await res.json();
@@ -14,6 +23,10 @@ export default function BikeDetails({ bike }) {
     if (res.ok) {
       dispatch({ type: "DELETE_BIKE", payload: json });
     }
+  };
+
+  const handleEdit = () => {
+    dispatch({ type: "SET_EDIT_FORM", payload: bike });
   };
 
   return (
@@ -38,7 +51,12 @@ export default function BikeDetails({ bike }) {
       </p>
       <br />
       <br />
-      <spvan onClick={handleClick}>[Delete]</spvan>
+      {user && user.role === "admin" && (
+        <div>
+          <span onClick={handleClick}>[Delete]</span>
+          <span onClick={handleEdit}>Edit</span>
+        </div>
+      )}
     </div>
   );
 }

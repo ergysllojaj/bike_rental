@@ -2,28 +2,26 @@ import React from "react";
 import { useEffect } from "react";
 import BikeDetails from "../components/BikeDetails";
 import BikeForm from "../components/BikeForm";
-import { useAuthContext } from "../hooks/useAuthContext";
 import { useBikesContext } from "../hooks/useBikesContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function Home() {
   const { bikes, dispatch } = useBikesContext();
   const { user } = useAuthContext();
   useEffect(() => {
     const fetchBikes = async () => {
-      const res = await fetch("/api/bikes", {
+      const res = await fetch("/api/bikes/available", {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${user.token}`,
-        },
-      });
+          },
+          });
       const json = await res.json();
       if (res.ok) {
         dispatch({ type: "SET_BIKES", payload: json });
       }
     };
-    if (user) {
-      fetchBikes();
-    }
+    fetchBikes();
   }, [dispatch, user]);
 
   return (
