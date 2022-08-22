@@ -84,8 +84,6 @@ module.exports.getOneBike = (req, res) => {
 
 //create a bike
 module.exports.createBike = (req, res) => {
-  console.log("Starting adding new bike!");
-
   const { model, color, location, rating, isAvailable } = req.body;
 
   Bikes.create({ model, color, location, rating: +rating, isAvailable })
