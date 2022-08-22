@@ -101,7 +101,6 @@ module.exports.createBike = (req, res) => {
 
 //update a bike
 module.exports.updateBike = (req, res) => {
-  console.log(req.body, req.params.id);
   Bikes.findByIdAndUpdate(req.params.id, req.body)
     .then((bike) => {
       res.status(200).json(bike);
