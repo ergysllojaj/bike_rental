@@ -14,7 +14,7 @@ export default function BikeDetails({ bike }) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${user.token}`,
+        Authorization: `Bearer ${user.token}`,
       },
     });
 
@@ -54,7 +54,7 @@ export default function BikeDetails({ bike }) {
       {user && user.role === "admin" && (
         <div>
           <span onClick={handleClick}>[Delete]</span>
-          <span onClick={handleEdit}>Edit</span>
+          <span onClick={handleEdit}>[Edit]</span>
         </div>
       )}
     </div>

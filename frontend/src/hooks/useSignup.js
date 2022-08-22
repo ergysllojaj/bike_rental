@@ -24,7 +24,7 @@ export const useSignup = () => {
         setIsLoading(false);
         localStorage.setItem("user", JSON.stringify(data));
         dispatch({ type: "LOGIN", payload: data });
-        //redirect based on role
+        //redirect based on role 
         if (data.role === "admin") {
           navigate("/admin");
         } else {

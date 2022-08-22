@@ -29,7 +29,10 @@ const Signup = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
-        <label>Company code</label>
+        <label>
+          Company code:<br></br> Insert "COMPANYCODE" to sign up as an admin or
+          leave it empty to sign up as a user
+        </label>
         <input
           type="password"
           value={companyCode}
